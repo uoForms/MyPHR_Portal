@@ -55,9 +55,9 @@ function getClient(client_id) {
       })
   );
 }
-function getAddress(id) {
+function getAddress(client_id) {
   return (
-    fetch(`https://5cdc6232069eb30014202d8e.mockapi.io/addresses/${id}`)
+    fetch(`https://5cdc6232069eb30014202d8e.mockapi.io/addresses/${client_id}`)
       // We get the API response and receive data in JSON format...
       .then(response => response.json())
       // ...then we locally store data
@@ -115,7 +115,24 @@ function getHealthProfile(client_id, token) {
       return healthProfile;
     });
 }
-function getPhysicians() {}
+function getPhysicians(client_id) {
+  localStorage.removeItem("physicians");
+  return (
+    fetch(
+      `https://5cdc6232069eb30014202d8e.mockapi.io/profile/${client_id}/users/`
+    ) //must have a place to put userId
+      // We get the API response and receive data in JSON format...
+      .then(response => response.json())
+      // ...then we locally store data
+      .then(physicians => {
+        localStorage.setItem("physicians", JSON.stringify(physicians));
+
+        const p = localStorage.getItem("physicians");
+        console.log("print physicians:" + p);
+        return p;
+      })
+  );
+}
 function getPhoneNumber() {}
 
 function logout() {

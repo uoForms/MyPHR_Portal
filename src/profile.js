@@ -15,7 +15,8 @@ class Profile extends React.Component {
       caregiver: {},
       isLoading: true,
       healthProfile: [],
-      client: {}
+      client: {},
+      p: []
     };
   }
 
@@ -36,6 +37,14 @@ class Profile extends React.Component {
       .getCaregivers(JSON.parse(localStorage.getItem("user")).id)
       .then(data => this.setState({ c: JSON.parse(data) }));
 
+    userService
+      .getAddress(JSON.parse(localStorage.getItem("user")).id)
+      .then(data => this.setState({ address: JSON.parse(data) }));
+
+    userService
+      .getPhysicians(JSON.parse(localStorage.getItem("user")).id)
+      .then(data => this.setState({ p: JSON.parse(data) }));
+
     //real api calls
     userService
       .getHealthProfile(
@@ -46,7 +55,8 @@ class Profile extends React.Component {
 
     console.log("xxx" + localStorage.getItem("user"));
     console.log("rrr" + localStorage.getItem("address"));
-    console.log("fff" + localStorage.getItem("caregiver"));
+
+    console.log("ppp" + localStorage.getItem("physicians"));
 
     //user from real api
     console.log("oneUser:" + localStorage.getItem("oneUser"));
@@ -54,8 +64,8 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { user, client, address, c, healthProfile } = this.state;
-
+    const { user, client, address, c, healthProfile, p } = this.state;
+    console.log("dssfdfsf:" + JSON.stringify(p));
     return (
       <TabContainer id="left-tabs-example" defaultActiveKey="first">
         <Row>
@@ -132,106 +142,199 @@ class Profile extends React.Component {
             <TabContent class="tab-content">
               <TabPane eventKey="first">
                 <p>
-                  {client.firstname} {client.surname}
+                  <strong>
+                    {client.firstname} {client.surname}
+                  </strong>
                 </p>
-                <p>Date of Birth: {client.dob}</p>
-                <p>Gender: {client.gender}</p>
-                <p>Service Language: {client.service_language}</p>
-                <p>Last Access: </p>
+                <p>
+                  <strong>Date of Birth:</strong> {client.dob}
+                </p>
+                <p>
+                  <strong>Gender:</strong> {client.gender}
+                </p>
+                <p>
+                  <strong>Service Language:</strong> {client.service_language}
+                </p>
+                <p>
+                  <strong>Last Access:</strong> {client.last_access}
+                </p>
               </TabPane>
               <TabPane eventKey="second">
-                <p>Dietary Regimen: </p>
-                <p>Advance Direcrives: </p>
-                <p>Active Diagnosis: </p>
-                <li> >></li>
-                <li> diagnosed on: </li>
-                <li> diagnosed by: </li>
-                <p>Allergies: </p>
+                <p>
+                  <strong>Dietary Regimen:</strong> {client.dietary_regimen}{" "}
+                </p>
+                <p>
+                  <strong>Advanced Directives:</strong>{" "}
+                  {client.advance_directives}{" "}
+                </p>
+                <p>
+                  <strong>Active Diagnosis:</strong>{" "}
+                </p>
+                <div>
+                  {client.is_activity_impediment ? (
+                    <div>
+                      <div> >></div>
+                      <ul>
+                        <li> diagnosed on:</li>
+                        <li> diagnosed by: </li>
+                      </ul>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                </div>
+
+                <p>
+                  <strong>Allergies:</strong>{" "}
+                </p>
 
                 <div>
-                  {healthProfile.map((m, index) => (
+                  {client.is_allergy ? (
                     <div>
-                      {m.is_allergy ? (
-                        <div>
-                          <li> >> </li>
-                        </div>
-                      ) : (
-                        <li>null</li>
-                      )}
+                      <li> >> </li>
                     </div>
-                  ))}
+                  ) : (
+                    <div />
+                  )}
                 </div>
-                <p>Risk and Safety Codes: </p>
+
+                <p>
+                  <strong>Risk and Safety Codes:</strong>{" "}
+                </p>
                 <div>
-                  {healthProfile.map((h, index) => (
-                    <div>
-                      {h.is_risk_and_safety_issue ? (
-                        <div>
-                          <li> >> {h.name}</li>
-                        </div>
-                      ) : (
-                        <li>null</li>
-                      )}
-                    </div>
-                  ))}
+                  {client.is_risk_and_safety_issue ? (
+                    <div>>> {client.name}</div>
+                  ) : (
+                    <div />
+                  )}
                 </div>
               </TabPane>
               <TabPane eventKey="third">
                 <p>
-                  Home Address: {address.street_number}, {address.city},{" "}
-                  {address.country}, {address.postal_code}
+                  <strong>Home Address:</strong> {address.street_number},{" "}
+                  {address.city}, {address.country}, {address.postal_code}
                 </p>
                 <p>
-                  Mailing Address:{address.street_number}, {address.city},{" "}
-                  {address.country}, {address.postal_code}
+                  <strong>Mailing Address:</strong> {address.street_number},{" "}
+                  {address.city}, {address.country}, {address.postal_code}
                 </p>
-                <p>Other Address: null</p>
-                <p>Cell Phone: {address.cell_phone}</p>
-                <p>Home Phone: {address.home_phone}</p>
-                <p>Email: {address.email}</p>
+                <p>
+                  <strong>Other Address:</strong>{" "}
+                </p>
+                <p>
+                  <strong>Cell Phone:</strong> {address.cell_phone}
+                </p>
+                <p>
+                  <strong>Home Phone:</strong> {address.home_phone}
+                </p>
+                <p>
+                  <strong>Email:</strong> {address.email}
+                </p>
               </TabPane>
               <TabPane eventKey="fourth">
                 <div>
                   {c.is_primary_caregiver ? (
                     <div>
-                      <p>Primary Contact: </p>
-                      <li>
-                        {" "}
-                        Name: {c.firstname} {c.surname}
-                      </li>
-                      <li> Relationship: {c.relationship}</li>
-                      <li> Home Address: {c.homeAddress}</li>
-                      <li> Mailing Address: {c.mailingAddress}</li>
-                      <li> Cell Phone: {c.cellPhone}</li>
-                      <li> Home Phone: {c.homePhone}</li>
-                      <li> Email: {c.email}</li>
+                      <p>
+                        <strong>Primary Contact:</strong>{" "}
+                      </p>
+                      <ul>
+                        <li>
+                          {" "}
+                          <strong>Name:</strong> {c.firstname} {c.surname}
+                        </li>
+                        <li>
+                          <strong> Relationship:</strong> {c.relationship}
+                        </li>
+                        <li>
+                          <strong> Home Address:</strong> {c.street_name},{" "}
+                          {c.city}, {c.country}, {c.postal_code}
+                        </li>
+
+                        <li>
+                          <strong> Mailing Address:</strong> {c.mailingAddress}
+                        </li>
+                        <li>
+                          <strong> Cell Phone:</strong> {c.cell_phone}
+                        </li>
+                        <li>
+                          <strong> Home Phone:</strong> {c.home_phone}
+                        </li>
+                        <li>
+                          <strong> Email:</strong> {c.email}
+                        </li>
+                      </ul>
                     </div>
                   ) : (
                     <div>
-                      <p>Second Contact: </p>
-                      <li>
-                        {" "}
-                        Name: {c.firstname} {c.surname}
-                      </li>
-                      <li> Relationship:{c.relationship} </li>
-                      <li> Home Address: </li>
-                      <li> Mailing Address: </li>
-                      <li> Cell Phone: </li>
-                      <li> Home Phone: </li>
-                      <li> Email: </li>
+                      <p>
+                        <strong>Second Contact:</strong>{" "}
+                      </p>
+                      <ul>
+                        <li>
+                          <strong> Name:</strong> {c.firstname} {c.surname}
+                        </li>
+                        <li>
+                          <strong> Relationship:</strong>
+                          {c.relationship}{" "}
+                        </li>
+                        <li>
+                          <strong> Home Address:</strong>{" "}
+                        </li>
+                        <li>
+                          <strong> Mailing Address:</strong>{" "}
+                        </li>
+                        <li>
+                          <strong> Cell Phone:</strong>{" "}
+                        </li>
+                        <li>
+                          <strong> Home Phone:</strong>{" "}
+                        </li>
+                        <li>
+                          <strong> Email:</strong>{" "}
+                        </li>
+                      </ul>
                     </div>
                   )}
                 </div>
               </TabPane>
               <TabPane eventKey="fifth">
-                <p>Family Physicians: </p>
-                <li> Name: </li>
-                <li> Address: </li>
-                <li> Phone: </li>
-                <p>Neurologist: </p>
-                <li> Name: </li>
-                <li> Address: </li>
-                <li> Phone: </li>
+                <p>
+                  <strong>Family Physicians:</strong>{" "}
+                </p>
+                <div>
+                  {p.map(p => (
+                    <div>
+                      <ul>
+                        <li>
+                          <strong> Name:</strong> {p.p_name}{" "}
+                        </li>
+                        <li>
+                          <strong> Address:</strong> {p.p_street_name},{" "}
+                          {p.p_city}, {p.p_country}, {p.p_postal_code}{" "}
+                        </li>
+                        <li>
+                          <strong> Phone:</strong> {p.p_phone}{" "}
+                        </li>
+                      </ul>
+                      <p>
+                        <strong>Neurologist:</strong>{" "}
+                      </p>
+                      <ul>
+                        <li>
+                          <strong> Name:</strong> {p.n_name}{" "}
+                        </li>
+                        <li>
+                          <strong> Address:</strong> {p.n_street_name},{" "}
+                          {p.n_city}, {p.n_country}, {p.n_postal_code}{" "}
+                        </li>
+                        <li>
+                          <strong> Phone:</strong> {p.n_phone}{" "}
+                        </li>
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </TabPane>
             </TabContent>
           </Col>

@@ -12,14 +12,14 @@ img {
   border-radius: 4px;
   padding: 5px;
   margin: -55px 0 50px -50px;
-  height: 290px;
-  width: 290px;
+  height: 65%;
+  width: 155%;
+  position: relative;
 }
 h3 {
   font-weight: bolder;
 }
 p {
-  font-weight: bold;
   margin-bottom: 1px;
 }
 ul {

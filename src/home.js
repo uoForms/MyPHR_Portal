@@ -43,7 +43,7 @@ class Home extends Component {
           <body>
             <div class="row">
               <div class="column1">
-                <img src={photo} alt="Photo" />
+                <img src={client.avatar} alt="Photo" />
 
                 <h3>
                   {client.firstname} {client.surname}

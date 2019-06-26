@@ -67,10 +67,12 @@ class Episodes extends React.Component {
                 <li>Blood test</li>
                 <li>Requesting physician: Dr.Helen Spie</li>
               </ul>
-              <h5 className="vertical-timeline-element-title">Dynacare Labs</h5>
+              <h5 className="vertical-timeline-element-title">
+                Montfort Family Health Team
+              </h5>
               <ul>
                 <li>2018-05-07</li>
-                <li>Blood test</li>
+                <li>General check-up</li>
                 <li>Requesting physician: Dr.Helen Spie</li>
               </ul>
             </VerticalTimelineElement>
@@ -94,26 +96,15 @@ class Episodes extends React.Component {
               date="March 2018"
               iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
             >
-              <h5 className="vertical-timeline-element-title">Dynacare Labs</h5>
+              <h5 className="vertical-timeline-element-title">
+                The Ottawa Hospital
+              </h5>
               <ul>
                 <li>2018-03-30</li>
-                <li>Blood test</li>
-                <li>Requesting physician: Dr.Helen Spie</li>
-              </ul>
-              <h5 className="vertical-timeline-element-title">Dynacare Labs</h5>
-              <ul>
-                <li>2018-03-07</li>
-                <li>Blood test</li>
-                <li>Requesting physician: Dr.Helen Spie</li>
+                <li>Appendectomy Surgery</li>
+                <li>Requesting physician: Dr.Sergio Movati</li>
               </ul>
             </VerticalTimelineElement>
-
-            <VerticalTimelineElement
-              className="vertical-timeline-element--work"
-              date="Feburary 2018"
-              iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
-              position={"left"}
-            />
           </VerticalTimeline>
         </Element>
       </Fragment>
