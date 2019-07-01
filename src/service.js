@@ -13,7 +13,9 @@ export const userService = {
   getEpisodes,
   getHealthProfile,
   getPhysicians,
-  getPhoneNumber
+  getPhoneNumber,
+  getActivities,
+  getAlerts
 };
 
 //for fake api, responsing to backend.js
@@ -128,7 +130,7 @@ function getPhysicians(client_id) {
         localStorage.setItem("physicians", JSON.stringify(physicians));
 
         const p = localStorage.getItem("physicians");
-        console.log("print physicians:" + p);
+
         return p;
       })
   );
@@ -148,6 +150,38 @@ function getAll() {
   return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
+function getActivities() {
+  localStorage.removeItem("activities");
+  return (
+    fetch(`http://www.mocky.io/v2/5d1a58582f0000a148fd75f5`)
+      // We get the API response and receive data in JSON format...
+      .then(response => response.json())
+      // ...then we locally store data
+      .then(activities => {
+        localStorage.setItem("activities", JSON.stringify(activities));
+
+        const act = localStorage.getItem("activities");
+
+        return act;
+      })
+  );
+}
+function getAlerts() {
+  localStorage.removeItem("alerts");
+  return (
+    fetch(`http://www.mocky.io/v2/5d1a60c62f00000e00fd7624`)
+      // We get the API response and receive data in JSON format...
+      .then(response => response.json())
+      // ...then we locally store data
+      .then(alerts => {
+        localStorage.setItem("alerts", JSON.stringify(alerts));
+
+        const ale = localStorage.getItem("alerts");
+        console.log("print alerts:" + alerts);
+        return ale;
+      })
+  );
+}
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);

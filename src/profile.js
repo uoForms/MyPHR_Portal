@@ -16,7 +16,8 @@ class Profile extends React.Component {
       isLoading: true,
       healthProfile: [],
       client: {},
-      p: []
+      p: [],
+      act: []
     };
   }
 
@@ -33,6 +34,7 @@ class Profile extends React.Component {
       .then(data => this.setState({ address: JSON.parse(data) }));
      
 */
+
     userService
       .getCaregivers(JSON.parse(localStorage.getItem("user")).id)
       .then(data => this.setState({ c: JSON.parse(data) }));
@@ -65,7 +67,7 @@ class Profile extends React.Component {
 
   render() {
     const { user, client, address, c, healthProfile, p } = this.state;
-    console.log("dssfdfsf:" + JSON.stringify(p));
+
     return (
       <TabContainer id="left-tabs-example" defaultActiveKey="first">
         <Row>

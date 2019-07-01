@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/wenyanl/MyPHR_Portal_MockAPIs/precache-manifest.3aac2f36d5bb08db624ecb47efdd66a6.js"
+  "/wenyanl/MyPHR_Portal_MockAPIs/precache-manifest.f28f373d444cb4454e11e9f106cc902e.js"
 );
 
 workbox.clientsClaim();
