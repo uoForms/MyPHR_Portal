@@ -45,7 +45,7 @@ class Home extends Component {
               <div class="column1">
                 <img src={client.avatar} alt="Photo" />
                 <div class="left-container">
-                  <h3>
+                  <h3 class="name">
                     {client.firstname} {client.surname}
                   </h3>
 

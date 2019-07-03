@@ -19,7 +19,7 @@ img {
 .left-container {
   padding-top: 250px;
 }
-h3 {
+h3 .name {
   font-weight: bolder;
   margin-left: 20px;
   position: absolute;
