@@ -15,7 +15,9 @@ export const userService = {
   getPhysicians,
   getPhoneNumber,
   getActivities,
-  getAlerts
+  getAlerts,
+  //update PUT data
+  updateClient
 };
 
 //for fake api, responsing to backend.js
@@ -56,6 +58,29 @@ function getClient(client_id) {
         return cli;
       })
   );
+}
+
+function updateClient(client_id, data) {
+  return fetch(
+    `https://5cdc6232069eb30014202d8e.mockapi.io/profile/${client_id}`,
+    {
+      method: "PUT",
+      //mode: "CORS",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  )
+    .then(response => {
+      if (!response.ok) {
+        this.handleResponseError(response);
+      }
+      return response.json();
+    })
+    .catch(error => {
+      this.handleError(error);
+    });
 }
 function getAddress(client_id) {
   return (

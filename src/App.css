@@ -12,12 +12,19 @@ img {
   border-radius: 4px;
   padding: 5px;
   margin: -55px 0 50px -50px;
-  height: 65%;
-  width: 155%;
-  position: relative;
+  height: 55%;
+  width: 100%;
+  position: absolute;
+}
+.left-container {
+  padding-top: 250px;
 }
 h3 {
   font-weight: bolder;
+  margin-left: 20px;
+  position: absolute;
+  align-content: center;
+  margin-bottom: 10px;
 }
 p {
   margin-bottom: 1px;
@@ -25,6 +32,7 @@ p {
 ul {
   list-style-type: none;
 }
+
 .App-header {
   background-color: white;
   min-height: 10vh;
@@ -57,15 +65,16 @@ ul {
 }
 
 .editor {
-  margin-top: 5px;
+  margin-top: 50px;
   margin-left: -10px;
+  position: absolute;
 }
 .editor a {
   float: left;
   color: blue;
   text-align: center;
   padding-bottom: 10px;
-  padding-left: 14px;
+  padding-left: 40px;
   text-decoration: underline;
   font-size: 12px;
 }
@@ -80,15 +89,18 @@ ul {
 .column1 {
   float: left;
   width: 20%;
+  height: 10;
   padding: 50px;
   border: 1px solid grey;
   border-radius: 4px;
   margin: 20px 0 0 40px;
+  position: relative;
 }
 .column2 {
   float: left;
   width: 67%;
   padding: 10px;
+  position: relative;
 }
 .nav-active:global(.active) {
   text-decoration: underline;
