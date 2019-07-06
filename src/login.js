@@ -1,7 +1,11 @@
 import React from "react";
 import "./App.css";
 import { userService } from "./service";
+import { GoogleLogin } from "react-google-login";
 
+const responseGoogle = response => {
+  console.log(response);
+};
 class LoginForm extends React.Component {
   // Using a class based component here because we're accessing DOM refs
   constructor(props) {
@@ -17,6 +21,7 @@ class LoginForm extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -91,6 +96,21 @@ class LoginForm extends React.Component {
           <p style={{ textAlign: "center" }}>
             <button disabled>Answer Security Questions</button>
           </p>
+          <GoogleLogin
+            clientId="92030295018-lak1o3rjblql7mb6cj2ofl21ruf8po58.apps.googleusercontent.com"
+            render={renderProps => (
+              <button
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                Use Google Account to Login
+              </button>
+            )}
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
           <p style={{ textDecoration: "underline" }}>
             Forgot your username or password?
           </p>

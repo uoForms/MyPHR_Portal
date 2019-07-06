@@ -10,10 +10,11 @@ import {
   Button
 } from "react-bootstrap";
 import { userService } from "./service";
-import EditBasicInfo from "./editBasicInfo";
-import EditProfile from "./editProfile";
-import EditContact from "./editContact";
-import EditCaregivers from "./editCaregivers";
+import EditBasicInfo from "./Edit/editBasicInfo";
+import BasicInfo from "./Edit/basicInfo";
+import EditProfile from "./Edit/editProfile";
+import EditContact from "./Edit/editContact";
+import EditCaregivers from "./Edit/editCaregivers";
 
 class Profile extends React.Component {
   constructor(props, context) {
@@ -195,30 +196,7 @@ class Profile extends React.Component {
               <TabPane eventKey="first">
                 <div>
                   {!isEditBasic ? (
-                    <div>
-                      <p>
-                        <strong>
-                          {client.firstname} {client.surname}
-                        </strong>
-                      </p>
-                      <p>
-                        <strong>Date of Birth:</strong> {client.dob}
-                      </p>
-                      <p>
-                        <strong>Gender:</strong> {client.gender}
-                      </p>
-                      <p>
-                        <strong>Service Language:</strong>{" "}
-                        {client.service_language}
-                      </p>
-                      <p>
-                        <strong>Last Access:</strong> {client.last_access}
-                      </p>
-
-                      <Button variant="secondary" onClick={this.editBasic}>
-                        Edit
-                      </Button>
-                    </div>
+                    <BasicInfo editBasic={this.editBasic} />
                   ) : (
                     <EditBasicInfo />
                   )}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./App.css";
-import { userService } from "./service";
+import "../App.css";
+import { userService } from "../service";
 import { ButtonToolbar, Button } from "react-bootstrap";
 
 /*edit components */
@@ -11,7 +11,7 @@ class EditBasicInfo extends React.Component {
     this.state = {
       isLoading: true,
       client: {},
-      isEdit: true,
+      isEditBasic: true,
       language: {},
       l: test.service_language
     };
@@ -28,7 +28,7 @@ class EditBasicInfo extends React.Component {
   }
   editCancel() {
     this.setState({
-      isEdit: false
+      isEditBasic: false
     });
   }
 
@@ -59,7 +59,7 @@ class EditBasicInfo extends React.Component {
         </p>
         <p>
           <strong>Service Language:</strong>{" "}
-          <select value={l} onChange={this.handleChange}>
+          <select value={this.l} onChange={this.handleChange}>
             <option value="English">English</option>
             <option value="French">French</option>
           </select>
@@ -71,7 +71,9 @@ class EditBasicInfo extends React.Component {
           <Button variant="secondary" onClick={this.handleSubmit}>
             Save
           </Button>
-          <Button variant="secondary">Cancel</Button>
+          <Button variant="secondary" onClick={this.editCancel}>
+            Cancel
+          </Button>
         </ButtonToolbar>
       </div>
     );

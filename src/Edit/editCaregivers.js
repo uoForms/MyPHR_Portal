@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import "./App.css";
-import { userService } from "./service";
+import "../App.css";
+import { userService } from "../service";
 import { ButtonToolbar, Button } from "react-bootstrap";
 
 /*edit components */
@@ -39,8 +39,9 @@ class EditCaregivers extends React.Component {
           <ul>
             <li>
               {" "}
-              <strong>Name:</strong> <input placeholder="firstname" />{" "}
-              <input placeholder="surname" />
+              <strong>Name:</strong>{" "}
+              <input placeholder="firstname" value={c.firstname} />{" "}
+              <input placeholder="surname" value={c.surname} />
             </li>
             <li>
               <strong> Relationship:</strong>{" "}
@@ -51,10 +52,10 @@ class EditCaregivers extends React.Component {
             </li>
             <li>
               <strong> Home Address:</strong>{" "}
-              <input placeholder="street number" />,{" "}
-              <input placeholder="city" />
-              , <input placeholder="country" />,{" "}
-              <input placeholder="postal code" />
+              <input placeholder="street number" value={c.street_name} />,{" "}
+              <input placeholder="city" value={c.city} />
+              , <input placeholder="country" value={c.country} />,{" "}
+              <input placeholder="postal code" value={c.postal_code} />
             </li>
 
             <li>
@@ -66,15 +67,19 @@ class EditCaregivers extends React.Component {
             </li>
             <li>
               <strong> Cell Phone:</strong>{" "}
-              <input placeholder="(000)-000-0000" />
+              <input placeholder="(000)-000-0000" value={c.cell_phone} />
             </li>
             <li>
               <strong> Home Phone:</strong>{" "}
-              <input placeholder="(000)-000-0000" />
+              <input placeholder="(000)-000-0000" value={c.home_phone} />
             </li>
             <li>
               <strong> Email:</strong>{" "}
-              <input type="email" placeholder="name@example.com" />
+              <input
+                type="email"
+                placeholder="name@example.com"
+                value={c.email}
+              />
             </li>
           </ul>
         </div>
