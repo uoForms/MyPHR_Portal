@@ -24,6 +24,7 @@ class EditContact extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = this.getInitialState();
+    this.editContact = this.editContact.bind(this);
     this.editCancel = this.editCancel.bind(this);
     // User has entered something in the address bar
     this.onQuery = this.onQuery.bind(this);
@@ -108,7 +109,7 @@ class EditContact extends React.Component {
       isLoading: true,
       client: {},
       address: {},
-      isEditContact: true,
+      isEditContact: false,
       validated: false,
       query: "",
       locationId: "",
@@ -117,7 +118,11 @@ class EditContact extends React.Component {
       data: {}
     };
   }
-
+  editContact() {
+    this.setState({
+      isEditContact: true
+    });
+  }
   //disabled now
   onClear(evt) {
     const state = this.getInitialState();
@@ -250,21 +255,58 @@ class EditContact extends React.Component {
   }
   render() {
     let result = this.alert();
-    const { client, address, validated, cell_phone, home_phone } = this.state;
+    const {
+      client,
+      address,
+      validated,
+      cell_phone,
+      home_phone,
+      isEditContact
+    } = this.state;
     return (
       <div>
-        <p>
-          <strong>Home Address:</strong>
-          <AddressSuggest
-            query={this.state.query}
-            value={address.street_number}
-            onChange={this.onQuery}
-            placeholder={address.street_number}
-          />
-          <input placeholder="city" value={address.city} /> ,{" "}
-          <input placeholder="country" value={address.country} />,{" "}
-          <input placeholder="postal code" value={address.postalCode} />
-          {/**
+        {!isEditContact ? (
+          <div>
+            <p>
+              <strong>Home Address:</strong> {address.street_number},{" "}
+              {address.city}, {address.country}, {address.postal_code}
+            </p>
+            <p>
+              <strong>Mailing Address:</strong> {address.street_number},{" "}
+              {address.city}, {address.country}, {address.postal_code}
+            </p>
+            <p>
+              <strong>Other Address:</strong>{" "}
+            </p>
+            <p>
+              <strong>Cell Phone:</strong> {address.cell_phone}
+            </p>
+            <p>
+              <strong>Home Phone:</strong> {address.home_phone}
+            </p>
+            <p>
+              <strong>Email:</strong> {address.email}
+            </p>
+
+            <Button variant="secondary" onClick={this.editContact}>
+              Edit
+            </Button>
+          </div>
+        ) : (
+          ///////////////////////////////////////EDIT ////////////////////////////////////////
+          <div>
+            <p>
+              <strong>Home Address:</strong>
+              <AddressSuggest
+                query={this.state.query}
+                value={address.street_number}
+                onChange={this.onQuery}
+                placeholder={address.street_number}
+              />
+              <input placeholder="city" value={address.city} /> ,{" "}
+              <input placeholder="country" value={address.country} />,{" "}
+              <input placeholder="postal code" value={address.postalCode} />
+              {/**
 
           <AddressInput
             street={this.state.address.street}
@@ -275,66 +317,72 @@ class EditContact extends React.Component {
             onChange={this.onAddressChange}
           />
  */}
-          <br />
-          {result}
-        </p>
+              <br />
+              {result}
+            </p>
 
-        <p>
-          <strong>Mailing Address:</strong>{" "}
-          <input placeholder="street" value={address.street_number} />,{" "}
-          <input placeholder="city" value={address.city} />
-          , <input placeholder="country" value={address.country} />,{" "}
-          <input placeholder="postal code" value={address.postal_code} />
-        </p>
-        <p>
-          <strong>Other Address:</strong> <input placeholder="street number" />,{" "}
-          <input placeholder="city" />
-          , <input placeholder="country" />, <input placeholder="postal code" />
-        </p>
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>
-              <strong>Cell Phone:</strong>
-            </Form.Label>
-            <ReactPhoneInput
-              placeholder="Enter phone number"
-              defaultCountry={"ca"}
-              value={cell_phone}
-              onChange={cell_phone => this.setState({ cell_phone })}
-            />
-          </Form.Group>
+            <p>
+              <strong>Mailing Address:</strong>{" "}
+              <input placeholder="street" value={address.street_number} />,{" "}
+              <input placeholder="city" value={address.city} />
+              , <input placeholder="country" value={address.country} />,{" "}
+              <input placeholder="postal code" value={address.postal_code} />
+            </p>
+            <p>
+              <strong>Other Address:</strong>{" "}
+              <input placeholder="street number" />,{" "}
+              <input placeholder="city" />
+              , <input placeholder="country" />,{" "}
+              <input placeholder="postal code" />
+            </p>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>
+                  <strong>Cell Phone:</strong>
+                </Form.Label>
+                <ReactPhoneInput
+                  placeholder="Enter phone number"
+                  defaultCountry={"ca"}
+                  value={cell_phone}
+                  onChange={cell_phone => this.setState({ cell_phone })}
+                />
+              </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label>
-              <strong>Home Phone:</strong>
-            </Form.Label>
-            <ReactPhoneInput
-              placeholder="Enter phone number"
-              defaultCountry={"ca"}
-              value={home_phone}
-              onChange={home_phone => this.setState({ home_phone })}
-            />
-          </Form.Group>
-        </Form.Row>
+              <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Label>
+                  <strong>Home Phone:</strong>
+                </Form.Label>
+                <ReactPhoneInput
+                  placeholder="Enter phone number"
+                  defaultCountry={"ca"}
+                  value={home_phone}
+                  onChange={home_phone => this.setState({ home_phone })}
+                />
+              </Form.Group>
+            </Form.Row>
 
-        <p>
-          <strong>Email:</strong>{" "}
-          <Field
-            validator="isEmail"
-            required
-            name="email"
-            placeholder="Email"
-            onChange={this.handleChange}
-            value={this.state.data.email}
-            shouldValidateInputs={this.state.shouldValidateInputs}
-          />
-        </p>
-        <ButtonToolbar>
-          <Button variant="secondary" onClick={this.onCheck}>
-            Save
-          </Button>
-          <Button variant="secondary">Cancel</Button>
-        </ButtonToolbar>
+            <p>
+              <strong>Email:</strong>{" "}
+              <Field
+                validator="isEmail"
+                required
+                name="email"
+                placeholder="Email"
+                onChange={this.handleChange}
+                value={this.state.data.email}
+                shouldValidateInputs={this.state.shouldValidateInputs}
+              />
+            </p>
+            <ButtonToolbar>
+              <Button variant="secondary" onClick={this.onCheck}>
+                Save
+              </Button>
+              <Button variant="secondary" onClick={this.editCancel}>
+                Cancel
+              </Button>
+            </ButtonToolbar>
+          </div>
+        )}
       </div>
     );
   }

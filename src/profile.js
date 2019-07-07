@@ -27,11 +27,7 @@ class Profile extends React.Component {
       healthProfile: [],
       client: {},
       p: [],
-      act: [],
-      isEditBasic: false,
-      isEditProfile: false,
-      isEditContact: false,
-      isEditCaregivers: false
+      act: []
     };
     this.editBasic = this.editBasic.bind(this);
     this.editProfile = this.editProfile.bind(this);
@@ -196,101 +192,10 @@ class Profile extends React.Component {
                 <BasicInfo />
               </TabPane>
               <TabPane eventKey="second">
-                <div>
-                  {!isEditProfile ? (
-                    <div>
-                      <p>
-                        <strong>Dietary Regimen:</strong>{" "}
-                        {client.dietary_regimen}{" "}
-                      </p>
-                      <p>
-                        <strong>Advanced Directives:</strong>{" "}
-                        {client.advance_directives}{" "}
-                      </p>
-                      <p>
-                        <strong>Active Diagnosis:</strong>{" "}
-                      </p>
-                      <div>
-                        {client.is_activity_impediment ? (
-                          <div>
-                            <div> >></div>
-                            <ul>
-                              <li> diagnosed on:</li>
-                              <li> diagnosed by: </li>
-                            </ul>
-                          </div>
-                        ) : (
-                          <div />
-                        )}
-                      </div>
-
-                      <p>
-                        <strong>Allergies:</strong>{" "}
-                      </p>
-
-                      <div>
-                        {client.is_allergy ? (
-                          <div>
-                            <li> >> </li>
-                          </div>
-                        ) : (
-                          <div />
-                        )}
-                      </div>
-
-                      <p>
-                        <strong>Risk and Safety Codes:</strong>{" "}
-                      </p>
-                      <div>
-                        {client.is_risk_and_safety_issue ? (
-                          <div>>> {client.name}</div>
-                        ) : (
-                          <div />
-                        )}
-                      </div>
-                      <Button variant="secondary" onClick={this.editProfile}>
-                        Edit
-                      </Button>
-                    </div>
-                  ) : (
-                    <EditProfile />
-                  )}
-                </div>
+                <EditProfile />
               </TabPane>
               <TabPane eventKey="third">
-                <div>
-                  {!isEditContact ? (
-                    <div>
-                      <p>
-                        <strong>Home Address:</strong> {address.street_number},{" "}
-                        {address.city}, {address.country}, {address.postal_code}
-                      </p>
-                      <p>
-                        <strong>Mailing Address:</strong>{" "}
-                        {address.street_number}, {address.city},{" "}
-                        {address.country}, {address.postal_code}
-                      </p>
-                      <p>
-                        <strong>Other Address:</strong>{" "}
-                      </p>
-                      <p>
-                        <strong>Cell Phone:</strong> {address.cell_phone}
-                      </p>
-                      <p>
-                        <strong>Home Phone:</strong> {address.home_phone}
-                      </p>
-                      <p>
-                        <strong>Email:</strong> {address.email}
-                      </p>
-
-                      <Button variant="secondary" onClick={this.editContact}>
-                        Edit
-                      </Button>
-                    </div>
-                  ) : (
-                    <EditContact />
-                  )}
-                </div>
+                <EditContact />
               </TabPane>
               <TabPane eventKey="fourth">
                 <div>
