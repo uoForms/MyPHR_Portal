@@ -10,7 +10,6 @@ import {
   Button
 } from "react-bootstrap";
 import { userService } from "./service";
-import EditBasicInfo from "./Edit/editBasicInfo";
 import BasicInfo from "./Edit/basicInfo";
 import EditProfile from "./Edit/editProfile";
 import EditContact from "./Edit/editContact";
@@ -194,13 +193,7 @@ class Profile extends React.Component {
           <Col sm={9}>
             <TabContent class="tab-content">
               <TabPane eventKey="first">
-                <div>
-                  {!isEditBasic ? (
-                    <BasicInfo editBasic={this.editBasic} />
-                  ) : (
-                    <EditBasicInfo />
-                  )}
-                </div>
+                <BasicInfo />
               </TabPane>
               <TabPane eventKey="second">
                 <div>

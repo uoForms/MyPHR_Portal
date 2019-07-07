@@ -29,7 +29,7 @@ class Home extends Component {
     });
     userService
       .getClient(JSON.parse(localStorage.getItem("user")).id)
-      .then(data => this.setState({ client: JSON.parse(data) }));
+      .then(data => this.setState({ client: data }));
 
     console.log("sssss" + localStorage.getItem("client"));
   }

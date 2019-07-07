@@ -17,7 +17,7 @@ export const userService = {
   getActivities,
   getAlerts,
   //update PUT data
-  updateClient
+  updateLanguage
 };
 
 //for fake api, responsing to backend.js
@@ -55,33 +55,11 @@ function getClient(client_id) {
         //console.log("client is:" + localStorage.getItem("client"));
         const cli = localStorage.getItem("client");
 
-        return cli;
+        return client;
       })
   );
 }
 
-function updateClient(client_id, data) {
-  return fetch(
-    `https://5cdc6232069eb30014202d8e.mockapi.io/profile/${client_id}`,
-    {
-      method: "PUT",
-      //mode: "CORS",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  )
-    .then(response => {
-      if (!response.ok) {
-        this.handleResponseError(response);
-      }
-      return response.json();
-    })
-    .catch(error => {
-      this.handleError(error);
-    });
-}
 function getAddress(client_id) {
   return (
     fetch(`https://5cdc6232069eb30014202d8e.mockapi.io/addresses/${client_id}`)
@@ -207,6 +185,26 @@ function getAlerts() {
       })
   );
 }
+
+//update service language of basic info page
+function updateLanguage(client_id, data) {
+  return fetch(
+    "https://5cdc6232069eb30014202d8e.mockapi.io/profile/" + client_id,
+    {
+      method: "PUT",
+      //mode: "CORS",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  )
+    .then(res => {
+      return res;
+    })
+    .catch(err => err);
+}
+
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);

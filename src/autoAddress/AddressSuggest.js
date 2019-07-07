@@ -8,7 +8,6 @@ class AddressSuggest extends Component {
         label="start typing"
         value={this.props.query}
         onChange={this.props.onChange}
-        placeholder="typing here"
       />
     );
   }

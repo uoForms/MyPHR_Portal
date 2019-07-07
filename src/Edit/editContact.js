@@ -7,8 +7,9 @@ import AddressSuggest from "../autoAddress/AddressSuggest";
 import AddressInput from "../autoAddress/AddressInput";
 import axios from "axios";
 import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 import { Field, formInputData, formValidation } from "reactjs-input-validator";
+import ReactPhoneInput from "react-phone-input-2";
+import "react-phone-input-2/dist/style.css";
 
 const APP_ID_HERE = "Fz8mRRSVvIpzxV6B1qa1";
 const APP_CODE_HERE = "miB6oUEV_kPBGp7CQTQTAg";
@@ -33,12 +34,15 @@ class EditContact extends React.Component {
     // User has clicked the clear button
     this.onClear = this.onClear.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handlePhoneChange = this.handlePhoneChange.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       client: JSON.parse(localStorage.getItem("client")),
-      address: JSON.parse(localStorage.getItem("address"))
+      address: JSON.parse(localStorage.getItem("address")),
+      cell_phone: JSON.parse(localStorage.getItem("address")).cell_phone,
+      home_phone: JSON.parse(localStorage.getItem("address")).home_phone
     });
   }
   editCancel() {
@@ -47,6 +51,7 @@ class EditContact extends React.Component {
     });
   }
 
+  //disabled now
   handleSubmit(event) {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -55,8 +60,10 @@ class EditContact extends React.Component {
     }
     this.setState({ validated: true });
   }
-  onQuery(evt) {
-    const query = evt.target.value;
+
+  //Address Query
+  onQuery(event) {
+    const query = event.target.value;
 
     if (!query.length > 0) {
       this.setState(this.getInitialState());
@@ -111,6 +118,7 @@ class EditContact extends React.Component {
     };
   }
 
+  //disabled now
   onClear(evt) {
     const state = this.getInitialState();
     this.setState(state);
@@ -124,6 +132,8 @@ class EditContact extends React.Component {
     state.address[id] = val;
     this.setState(state);
   }
+
+  //handle email
   handleChange(event, inputValue, inputName, validationState, isRequired) {
     const value = (event && event.target.value) || inputValue;
     const { data } = this.state;
@@ -136,7 +146,12 @@ class EditContact extends React.Component {
     // tells you if the entire form validation is true or false
     const isFormValid = formValidation(this.state.data); // eslint-disable-line no-unused-vars
   }
-  //when validation
+
+  //handle phone number change
+  handlePhoneChange(value) {
+    this.setState({ cell_phone: value });
+  }
+  //when validation (clicking save button)
   onCheck(event) {
     let params = {
       app_id: APP_ID_HERE,
@@ -205,9 +220,13 @@ class EditContact extends React.Component {
       this.setState({ callAPI: true, shouldValidateInputs: !isFormValid });
     }
 
+    //validate phone form
+
+    //if all validated, save data!
     if (this.state.isChecked & !this.state.coords & isFormValid) {
       alert("saved!");
     }
+    console.log("new address:" + JSON.stringify(this.state.address));
   }
 
   alert() {
@@ -231,15 +250,19 @@ class EditContact extends React.Component {
   }
   render() {
     let result = this.alert();
-    const { client, address, validated } = this.state;
+    const { client, address, validated, cell_phone, home_phone } = this.state;
     return (
       <div>
         <p>
           <strong>Home Address:</strong>
-          <AddressSuggest query={this.state.query} onChange={this.onQuery} />
-          <input placeholder="street" value={this.state.query} />,{" "}
-          <input placeholder="city" value={address.city} />
-          , <input placeholder="country" value={address.country} />,{" "}
+          <AddressSuggest
+            query={this.state.query}
+            value={address.street_number}
+            onChange={this.onQuery}
+            placeholder={address.street_number}
+          />
+          <input placeholder="city" value={address.city} /> ,{" "}
+          <input placeholder="country" value={address.country} />,{" "}
           <input placeholder="postal code" value={address.postalCode} />
           {/**
 
@@ -268,19 +291,32 @@ class EditContact extends React.Component {
           <input placeholder="city" />
           , <input placeholder="country" />, <input placeholder="postal code" />
         </p>
-        <p>
-          <strong>Cell Phone:</strong>{" "}
-          <PhoneInput
-            placeholder="Enter phone number"
-            value={this.state.phone}
-            onChange={phone => this.setState({ phone })}
-            required
-          />
-        </p>
-        <p>
-          <strong>Home Phone:</strong>{" "}
-          <input placeholder="(000)-000-0000" value={address.home_phone} />
-        </p>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Label>
+              <strong>Cell Phone:</strong>
+            </Form.Label>
+            <ReactPhoneInput
+              placeholder="Enter phone number"
+              defaultCountry={"ca"}
+              value={cell_phone}
+              onChange={cell_phone => this.setState({ cell_phone })}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Label>
+              <strong>Home Phone:</strong>
+            </Form.Label>
+            <ReactPhoneInput
+              placeholder="Enter phone number"
+              defaultCountry={"ca"}
+              value={home_phone}
+              onChange={home_phone => this.setState({ home_phone })}
+            />
+          </Form.Group>
+        </Form.Row>
+
         <p>
           <strong>Email:</strong>{" "}
           <Field
