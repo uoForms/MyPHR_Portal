@@ -7,7 +7,6 @@ import { userService } from "./service";
 import Profile from "./profile";
 import Episodes from "./episodes";
 import Alerts from "./alerts";
-import photo from "./photo.png";
 import {
   Route,
   NavLink,

@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { Col, Row, Nav, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  TabContainer,
-  TabPane,
-  TabContent,
-  ButtonToolbar,
-  Button
-} from "react-bootstrap";
+import { TabContainer, TabPane, TabContent } from "react-bootstrap";
 import { userService } from "./service";
 import BasicInfo from "./Edit/basicInfo";
 import EditProfile from "./Edit/editProfile";
@@ -29,10 +23,6 @@ class Profile extends React.Component {
       p: [],
       act: []
     };
-    this.editBasic = this.editBasic.bind(this);
-    this.editProfile = this.editProfile.bind(this);
-    this.editContact = this.editContact.bind(this);
-    this.editCaregivers = this.editCaregivers.bind(this);
   }
 
   componentDidMount() {
@@ -79,40 +69,8 @@ class Profile extends React.Component {
     console.log(localStorage.getItem("client"));
   }
 
-  editBasic() {
-    this.setState({
-      isEditBasic: true
-    });
-  }
-  editProfile() {
-    this.setState({
-      isEditProfile: true
-    });
-  }
-  editContact() {
-    this.setState({
-      isEditContact: true
-    });
-  }
-  editCaregivers() {
-    this.setState({
-      isEditCaregivers: true
-    });
-  }
-
   render() {
-    const {
-      user,
-      client,
-      address,
-      c,
-      healthProfile,
-      p,
-      isEditBasic,
-      isEditProfile,
-      isEditContact,
-      isEditCaregivers
-    } = this.state;
+    const { p } = this.state;
 
     return (
       <TabContainer id="left-tabs-example" defaultActiveKey="first">
@@ -198,81 +156,7 @@ class Profile extends React.Component {
                 <EditContact />
               </TabPane>
               <TabPane eventKey="fourth">
-                <div>
-                  {!isEditCaregivers ? (
-                    <div>
-                      {c.is_primary_caregiver ? (
-                        <div>
-                          <p>
-                            <strong>Primary Contact:</strong>{" "}
-                          </p>
-                          <ul>
-                            <li>
-                              {" "}
-                              <strong>Name:</strong> {c.firstname} {c.surname}
-                            </li>
-                            <li>
-                              <strong> Relationship:</strong> {c.relationship}
-                            </li>
-                            <li>
-                              <strong> Home Address:</strong> {c.street_name},{" "}
-                              {c.city}, {c.country}, {c.postal_code}
-                            </li>
-
-                            <li>
-                              <strong> Mailing Address:</strong>{" "}
-                              {c.mailingAddress}
-                            </li>
-                            <li>
-                              <strong> Cell Phone:</strong> {c.cell_phone}
-                            </li>
-                            <li>
-                              <strong> Home Phone:</strong> {c.home_phone}
-                            </li>
-                            <li>
-                              <strong> Email:</strong> {c.email}
-                            </li>
-                          </ul>
-                        </div>
-                      ) : (
-                        <div>
-                          <p>
-                            <strong>Second Contact:</strong>{" "}
-                          </p>
-                          <ul>
-                            <li>
-                              <strong> Name:</strong> {c.firstname} {c.surname}
-                            </li>
-                            <li>
-                              <strong> Relationship:</strong>
-                              {c.relationship}{" "}
-                            </li>
-                            <li>
-                              <strong> Home Address:</strong>{" "}
-                            </li>
-                            <li>
-                              <strong> Mailing Address:</strong>{" "}
-                            </li>
-                            <li>
-                              <strong> Cell Phone:</strong>{" "}
-                            </li>
-                            <li>
-                              <strong> Home Phone:</strong>{" "}
-                            </li>
-                            <li>
-                              <strong> Email:</strong>{" "}
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                      <Button variant="secondary" onClick={this.editCaregivers}>
-                        Edit
-                      </Button>
-                    </div>
-                  ) : (
-                    <EditCaregivers />
-                  )}
-                </div>
+                <EditCaregivers />
               </TabPane>
               <TabPane eventKey="fifth">
                 <p>
